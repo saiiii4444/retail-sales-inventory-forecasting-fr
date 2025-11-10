@@ -51,6 +51,43 @@ def aggregate_sales(data: pd.DataFrame, freq: str) -> pd.DataFrame:
     grouped = grouped.rename(columns={'date': 'period_start'})
     return grouped
 
+# Additional function to compute service level per store on a monthly basis.
+def compute_service_level(data: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculate monthly service level by store.
+
+    A day is considered "in stock" for a store if at least one unit of any product
+    was sold. The service level is the proportion of in‑stock days in the month.
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        Raw daily sales data with columns 'date', 'store_id' and 'units_sold'.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Monthly service level per store with columns 'period_start', 'store_id',
+        and 'service_level'.
+    """
+    # Ensure date column is datetime
+    data['date'] = pd.to_datetime(data['date'])
+    # Flag days with at least one unit sold per store
+    data['in_stock'] = data['units_sold'] > 0
+    daily_service = (
+        data.groupby(['date', 'store_id'])['in_stock']
+        .max()
+        .reset_index()
+    )
+    # Aggregate by month and store
+    service_monthly = (
+        daily_service.groupby([pd.Grouper(key='date', freq='M'), 'store_id'])['in_stock']
+        .mean()
+        .reset_index()
+        .rename(columns={'date': 'period_start', 'in_stock': 'service_level'})
+    )
+    return service_monthly
+
 
 def main():
     # Define where the files live
@@ -71,7 +108,13 @@ def main():
     # Build monthly summary
     print("Creating monthly summary...")
     monthly = aggregate_sales(raw_df.copy(), 'M')
-    monthly.to_csv(out_dir / 'monthly_sales.csv', index=False)
+    # Save with a more descriptive name
+    monthly.to_csv(out_dir / 'sales_monthly.csv', index=False)
+
+    # Compute monthly service level
+    print("Calculating service level metrics...")
+    service_df = compute_service_level(raw_df[['date', 'store_id', 'units_sold']].copy())
+    service_df.to_csv(out_dir / 'service_monthly.csv', index=False)
 
     print("Done.")
 
