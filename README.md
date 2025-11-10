@@ -1,36 +1,37 @@
 # Retail Sales & Inventory Forecasting — France
 
-This repository contains a practical example of how to build an end‑to‑end data
-analytics project for a hypothetical French retail chain. The goal is to
-illustrate how daily sales and inventory transactions can be transformed into
-insights that help businesses forecast demand, manage stock levels, and
-improve overall performance.
+I built this project as a hands‑on exercise in turning raw data into insights
+for a fictional French retail chain. It’s meant to show a simple end‑to‑end
+workflow: starting from daily sales and inventory files, cleaning and
+aggregating them, and finally preparing them for interactive visuals in
+Power BI. The data and code are here for learning and can be adapted to
+real‑world scenarios.
 
 ## Project overview
 
 Retailers operate in a dynamic environment where demand can fluctuate
 significantly across stores and products. Having a clear view of sales trends
 and inventory levels allows managers to identify best‑selling items, plan
-replenishments, and avoid stockouts or overstock situations. This project
-simulates two years of daily transactions across ten stores and fifty
-products. The focus is on straightforward analytics: cleaning the data,
+replenishments, and avoid stockouts or overstock situations. In this project
+I generated two years of daily transactions across ten stores and fifty
+products. My focus was on straightforward analytics: cleaning the data,
 aggregating it at weekly and monthly frequencies, and preparing it for
 interactive dashboards.
 
 ### Key features
 
-- **Synthetic yet realistic data:** The dataset spans 1 January 2023 to
-  31 December 2024, capturing over 365 000 rows of transactions with
-  `units_sold`, `unit_price`, `revenue` and `inventory_level` for each
-  store/product combination.
-- **Simple ETL pipeline:** A single script (`src/etl.py`) reads the raw
-  CSV, converts dates, and produces weekly and monthly aggregates ready for
-  analysis.
+- **Realistic‑scale data:** The dataset spans 1 January 2023 to
+  31 December 2024, capturing hundreds of thousands of daily transactions.
+  Each row records `units_sold`, `unit_price`, `revenue` and
+  `inventory_level` for a store‑product combination.
+- **Straightforward ETL script:** A single script (`src/etl.py`) reads the
+  raw CSV, converts dates, and produces weekly and monthly aggregates ready
+  for analysis.
 - **Dashboard guidance:** Notes on how to assemble Power BI visuals are
   provided to help you build a compelling report with slicers, time series
   charts, and heatmaps.
-- **Human‑written documentation:** All code and explanations are written
-  plainly and directly, without references to automation or machine‑generated tools.
+- **Plain documentation:** All code and explanations are written in
+  everyday language. There are no references to AI or automation.
 
 ## Folder structure
 
@@ -87,9 +88,10 @@ analysis highlighting low inventory levels.
 The dataset provided here is synthetically generated to resemble the
 behaviour of a mid‑sized retailer. While the figures are not tied to any
 real company, the scale and structure are representative of real
-operational data. Top‑performing stores in this sample include **Store 09**
-and **Store 01**, while products such as **Product 040** and
-**Product 035** generate the highest revenue.
+operational data. In my own exploratory analyses, stores like
+**Store 09** and **Store 01** and products such as **Product 040** and
+**Product 035** emerged as top performers. Your findings may vary as you
+dive deeper into the numbers.
 
 ## Contributions
 
